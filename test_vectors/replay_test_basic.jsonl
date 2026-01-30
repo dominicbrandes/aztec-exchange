@@ -1,0 +1,2 @@
+{"cmd": "place_order", "req_id": "1", "order": {"account_id": "seller", "symbol": "BTC-USD", "side": "SELL", "type": "LIMIT", "price": 10000000000000, "quantity": 100000000}}
+{"cmd": "place_order", "req_id": "2", "order": {"account_id": "buyer", "symbol": "BTC-USD", "side": "BUY", "type": "LIMIT", "price": 10000000000000, "quantity": 100000000}}

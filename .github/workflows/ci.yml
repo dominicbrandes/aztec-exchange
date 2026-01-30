@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ python3 python3-pip python3-venv
+      
+      - name: Build engine
+        run: |
+          mkdir -p build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON ..
+          make -j$(nproc)
+      
+      - name: Run engine tests
+        run: |
+          cd build
+          ctest --output-on-failure
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Python dependencies
+        run: |
+          cd api
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio httpx
+      
+      - name: Run API tests
+        run: |
+          cd api
+          python -m pytest tests/ -v
+        env:
+          ENGINE_PATH: ${{ github.workspace }}/build/engine/exchange_engine
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check C++ formatting
+        run: |
+          sudo apt-get install -y clang-format
+          find engine/src engine/include -name '*.cpp' -o -name '*.hpp' | xargs clang-format --dry-run -Werror
+      
+      - name: Check Python formatting
+        run: |
+          pip install ruff
+          cd api && ruff check .

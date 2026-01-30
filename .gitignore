@@ -1,0 +1,29 @@
+# Build
+build/
+cmake-build-*/
+*.o
+*.a
+*.so
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Data
+data/
+*.jsonl
+!test_vectors/*.jsonl
+
+# OS
+.DS_Store
+Thumbs.db

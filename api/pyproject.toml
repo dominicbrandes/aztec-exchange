@@ -1,0 +1,38 @@
+[project]
+name = "aztec-exchange-api"
+version = "0.1.0"
+description = "REST API for the Aztec Exchange matching engine"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "pydantic>=2.5.0",
+    "python-json-logger>=2.0.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.23.0",
+    "httpx>=0.26.0",
+    "ruff>=0.1.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+```
+
+`api/requirements.txt`
+```
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+python-json-logger>=2.0.7
+pytest>=7.4.0
+pytest-asyncio>=0.23.0
+httpx>=0.26.0
+ruff>=0.1.0
